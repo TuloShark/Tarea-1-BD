@@ -6,17 +6,22 @@ CREATE PROCEDURE insertar_articulo
 )
 AS
 BEGIN 
-	SET NOCOUNT ON;
+	SET NOCOUNT ON; -- ACTIVAR, PARA QUE NO SALGAN EL NUMERO DE LINEAS AFECTADAS
 
-		IF (@Nombre IS NULL OR @Nombre NOT LIKE '%[a-z]%') -- SE VALIDA QUE SEAN LETRAS
+		IF (@Nombre IS NULL OR -- SE EVITA QUE SEA NULO
+			@Nombre NOT LIKE '%[a-z]%' AND -- SE VALIDA QUE SEAN LETRAS
+			@Nombre NOT LIKE '%-%'  -- O QUE CONTENGA UN GUION
+			)
 		BEGIN
 			PRINT 'El nombre no es valido' -- EN CASO DE QUE NO, SE IMPRIME UN ERROR
 			RETURN;
 		END;
 
-		IF (@Precio IS NULL) -- SI EL PARAMETRO ES NULO
+		IF (@Precio IS NULL OR -- SE EVITA QUE SEA NULO
+			@Precio <= 0 -- O SI ES MENOR O IGUAL A 0
+			) 
 		BEGIN
-			PRINT 'El precio no es valido'
+			PRINT 'El precio no es valido' -- EN CASO DE QUE NO, SE IMPRIME UN ERROR
 			RETURN;
 		END;
 
@@ -24,5 +29,5 @@ BEGIN
 	VALUES (@Nombre, @Precio)
 	PRINT 'Dato agregado'
 
-	SET NOCOUNT OFF;
+	SET NOCOUNT OFF; -- SE DESACTIVA SIEMPRE ANTES DE FINALIZAR
 END
