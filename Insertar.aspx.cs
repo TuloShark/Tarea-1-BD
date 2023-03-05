@@ -9,19 +9,26 @@ using System.Web.UI.WebControls;
 
 namespace prueba_de_ASP.NET
 {
-    public partial class _Default : Page
+    public partial class WebForm2 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
+
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             String Nombre = tbNombre.Text;
             String Precio = tbPrecio.Text;
-            if (!Nombre.Equals("")){
-                if (Regex.IsMatch(Precio, @"\d")) {
-                    SqlConnection conection = new SqlConnection("Data Source=db-aaron-wander.cf4srkshiegg.us-east-1.rds.amazonaws.com,1433;Initial Catalog=db-aaron-wander;User ID=admin;Password=Wanderjose#2");
+            String MainConex = @"Data Source=db-aaron-wander.cf4srkshiegg.us-east-1.rds.amazonaws.com,1433;
+            Initial Catalog=db-aaron-wander;
+            User ID=admin;
+            Password=Wanderjose#2";
+            if (!Nombre.Equals(""))
+            {
+                if (Regex.IsMatch(Precio, @"\d"))
+                {
+                    SqlConnection conection = new SqlConnection(MainConex);
                     conection.Open();
                     SqlCommand com = new SqlCommand("insertar_articulo", conection);
                     com.CommandType = System.Data.CommandType.StoredProcedure;
@@ -30,6 +37,7 @@ namespace prueba_de_ASP.NET
                     com.ExecuteNonQuery();
                     conection.Close();
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Se registro')", true);
+                    Response.Redirect("Index.aspx");
                 }
                 else
                 {
@@ -44,7 +52,8 @@ namespace prueba_de_ASP.NET
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            
+            Response.Redirect("Index.aspx");
+            Response.End();
         }
     }
 }
