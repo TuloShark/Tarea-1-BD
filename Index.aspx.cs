@@ -53,7 +53,7 @@ namespace Tarea1_Wander_Aaron
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Response.Close(); //Función que deja en blanco la página o termina los proceso
+            Response.End(); //Función que deja en blanco la página o termina los proceso
             //ScriptManager.RegisterStartupScript(this, this.GetType(), "closewindows", "window.close()", true);  // Funcion que permite cerrar la pestaña, se deja comentada por problemas al entrar a la otra página.
         }
     }
