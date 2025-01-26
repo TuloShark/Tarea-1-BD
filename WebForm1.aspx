@@ -8,7 +8,7 @@
     <title></title>
     <style type="text/css">
         .auto-style1 {
-            width: 100000000px;
+            width: 100px;
             height: 304px;
             position: absolute;
             left: 31px;
